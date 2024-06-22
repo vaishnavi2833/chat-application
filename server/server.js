@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const authRoutes= require('./routes/authRoutes')
 const messageRoutes=require('./routes/messageRoutes')
+const userRoutes = require('./routes/userRoutes')
 const connectdb = require('./db/connect')
 const cookieparser = require('cookie-parser')
 const cors=require('cors')
@@ -15,6 +16,7 @@ app.use(cookieparser())
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth',authRoutes)
 app.use('/api/messages',messageRoutes)
+app.use('/api/users',userRoutes)
 
 app.get('/',(req,res)=>{
     res.send("Hello")
