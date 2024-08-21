@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Gender from "./Gender";
+import { Link } from "react-router-dom";
+import userSignup from "../../hooks/userSignup";
 
 const Signup = () => {
+  const [inputs,setInputs]=useState({
+    fullName:'',
+    username:'',
+    password:'',
+    confirmPassword:'',
+    gender:''
+  })
+
+  const { signup, loading } = userSignup();
+
+  const handleCheckBox =(gender)=>{
+    setInputs({...inputs,gender})
+  }
+
+  const handleSubmit=async(e)=>{
+    e.preventDefault();
+    await signup(inputs)
+  }
+
   return (
     <div className="flex flex-col items-center justify-center mx-auto min-h-screen"> 
       <div className="w-full max-w-md px-8 py-16 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0"> 
@@ -12,40 +33,51 @@ const Signup = () => {
                 SignUp <span className="text-purple-500">ChatApp</span>
               </h1>
             </div>
-            <input
-              className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded" 
-              type="text"
-              placeholder="Full Name"
-            />
-            <input
-              className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded mt-6" 
-              type="text"
-              placeholder="Username"
-            />
-            <input
-              className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded mt-6" 
-              type="password"
-              placeholder="Password"
-            />
-            <input
-              className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded mt-6" 
-              type="password"
-              placeholder="Confirm Password"
-            />
-            <Gender/>
+            <form>
+              <input
+                className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded" 
+                type="text"
+                placeholder="Full Name"
+                value={inputs.fullName}
+                onChange={(e)=>setInputs({...inputs,fullName:e.target.value})}
+              />
+              <input
+                className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded mt-6" 
+                type="text"
+                placeholder="Username"
+                value={inputs.username}
+                onChange={(e)=>setInputs({...inputs,username:e.target.value})}
+              />
+              <input
+                className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded mt-6" 
+                type="password"
+                placeholder="Password"
+                value={inputs.password}
+                onChange={(e)=>setInputs({...inputs,password:e.target.value})}
+              />
+              <input
+                className="text-sm w-full px-6 py-3 border border-solid border-gray-300 rounded mt-6" 
+                type="password"
+                placeholder="Confirm Password"
+                value={inputs.confirmPassword}
+                onChange={(e)=>setInputs({...inputs,confirmPassword:e.target.value})}
+              />
+              <Gender onCheckboxChange={handleCheckBox} selectedGender={inputs.gender}/>
+            </form>
             <div className="mt-4 font-semibold text-sm text-slate-500 text-center md:text-left text-white"> 
               Already have an account?{" "}
-              <a
+              <Link
                 className="text-purple-600 hover:underline hover:underline-offset-4"
-                href="#"
+                to="/login"
               >
                 Login
-              </a>
+              </Link>
             </div>
             <div className="text-center md:text-left mt-6"> 
               <button
-                className="bg-blue-600 hover:bg-blue-700 px-6 py-3 text-white uppercase rounded text-sm tracking-wider w-full" 
+                className="bg-purple-600 hover:bg-blue-700 px-6 py-3 text-white uppercase rounded text-sm tracking-wider w-full" 
                 type="submit"
+                onClick={handleSubmit}
               >
                 Sign Up
               </button>
