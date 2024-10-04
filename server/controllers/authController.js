@@ -19,7 +19,7 @@ const login = async (req, res) => {
         generateTokenAndSetCookie(user._id, res);
 
         return res.status(200).json({
-            name: user.name,
+            fullName: user.fullName,
             username: user.username,
             picture:user.profileImg
         });
@@ -39,7 +39,7 @@ const logout =  (req,res)=>{
 
 const signup = async(req,res)=>{
     try{
-        const {name,username,password,confirmPassword,gender} = req.body
+        const {fullName,username,password,confirmPassword,gender} = req.body
 
         if(password!==confirmPassword){
             return res.status(400).json({error:"Passwords didn't match"})
@@ -57,7 +57,7 @@ const signup = async(req,res)=>{
         const girlProfile = `https://avatar.iran.liara.run/public/girl?username=${username}`
 
         const newUser = new User({
-            name,
+            fullName,
             username,
             password:hashPassword,
             gender,

@@ -11,7 +11,7 @@ const Signup = () => {
     confirmPassword:'',
     gender:''
   })
-
+ 
   const { signup, loading } = userSignup();
 
   const handleCheckBox =(gender)=>{
@@ -20,6 +20,7 @@ const Signup = () => {
 
   const handleSubmit=async(e)=>{
     e.preventDefault();
+    // console.log(inputs)
     await signup(inputs)
   }
 
@@ -78,8 +79,9 @@ const Signup = () => {
                 className="bg-purple-600 hover:bg-blue-700 px-6 py-3 text-white uppercase rounded text-sm tracking-wider w-full" 
                 type="submit"
                 onClick={handleSubmit}
+                disabled={loading}
               >
-                Sign Up
+                {loading? <span className='loading loading-spinner'/> : "Sign Up"}
               </button>
             </div>
             
