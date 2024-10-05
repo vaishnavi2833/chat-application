@@ -14,9 +14,12 @@ const userLogin = () =>{
         try{
             const res = await fetch("http://localhost:8000/api/auth/login",{
                 method:"POST",
-                headers:{"Content-Type": "application/json"}
+                headers:{"Content-Type": "application/json"},
+                body: JSON.stringify({ username, password }),
             })
-            const data = res.json();
+            // console.log()
+            const data = awaitres.json();
+            console.log(data)
             if(data.error){
                 throw new Error(data.error)
             }
@@ -42,4 +45,4 @@ function handleInputError(username,password ) {
       return false;
     }
     return true;
-  }
+}

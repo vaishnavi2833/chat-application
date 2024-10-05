@@ -4,7 +4,7 @@ const authRoutes= require('./routes/authRoutes')
 const messageRoutes=require('./routes/messageRoutes')
 const userRoutes = require('./routes/userRoutes')
 const connectdb = require('./db/connect')
-const cookieparser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 const cors=require('cors')
 const { connect } = require('mongoose')
 require ('dotenv').config()
@@ -12,8 +12,11 @@ require ('dotenv').config()
 const port = process.env.PORT || 8000
 
 app.use(express.json())
-app.use(cookieparser())
-app.use(cors())
+app.use(cookieParser())
+app.use(cors({
+    origin: 'http://localhost:3000', 
+    credentials: true 
+}))
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/auth',authRoutes)
 app.use('/api/messages',messageRoutes)
